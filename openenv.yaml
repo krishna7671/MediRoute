@@ -1,0 +1,58 @@
+name: mediRoute
+version: "1.0.0"
+description: >
+  MediRoute is an Emergency Department (ED) triage decision-support environment
+  where an AI agent assists clinicians by classifying patient urgency, extracting
+  structured data from clinical notes, and optimally allocating hospital resources.
+  Tasks are grounded in the Emergency Severity Index (ESI) clinical triage standard.
+author: MediRoute Team
+license: MIT
+tags:
+  - openenv
+  - healthcare
+  - triage
+  - nlp
+  - optimization
+  - real-world
+  - medical
+
+observation_space:
+  type: object
+  description: Patient data including vitals, clinical notes, and hospital resources
+
+action_space:
+  type: object
+  description: >
+    Task-dependent: ESI level classification, entity extraction dict,
+    or resource assignment list
+
+tasks:
+  - id: vitals_triage
+    name: "Task 1: Patient Vitals Triage"
+    difficulty: easy
+    description: >
+      Classify patient urgency (ESI 1–5) based on structured vital signs and
+      chief complaint. Score is weighted by clinical severity of misclassification.
+    max_steps: 1
+    score_range: [0.0, 1.0]
+
+  - id: clinical_extraction
+    name: "Task 2: Clinical Note Extraction"
+    difficulty: medium
+    description: >
+      Parse an unstructured SOAP-format clinical note and extract structured
+      medical entities: diagnosis, medications, allergies, procedures, follow-up.
+    max_steps: 1
+    score_range: [0.0, 1.0]
+
+  - id: resource_optimization
+    name: "Task 3: Multi-Patient Resource Optimization"
+    difficulty: hard
+    description: >
+      Given 8–12 simultaneous ED patients with varying ESI levels and a constrained
+      set of hospital resources (beds, physicians, imaging), produce optimal
+      patient-to-resource assignments.
+    max_steps: 3
+    score_range: [0.0, 1.0]
+
+entry_point: env.environment:MediRouteEnv
