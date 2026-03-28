@@ -1,21 +1,43 @@
+# Python
 __pycache__/
 *.py[cod]
 *.pyo
 *.pyd
 .Python
-*.egg
 *.egg-info/
 dist/
 build/
 .eggs/
-.env
-.venv
+
+# Virtual environments
 venv/
-ENV/
+.venv/
+env/bin/
+env/lib/
+
+# Environment variables
+.env
+*.local
+
+# Test & coverage
 .pytest_cache/
-.mypy_cache/
-.ruff_cache/
-*.log
-baseline_results.json
-*.DS_Store
+.coverage
+htmlcov/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
 Thumbs.db
+
+# HuggingFace / upload scripts
+upload_to_hf.py
+smoke_test.py
+openenv-mediRoute.zip
+
+# Baseline results
+baseline_results.json

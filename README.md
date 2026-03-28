@@ -1,19 +1,17 @@
 ---
-title: MediRoute Emergency Triage OpenEnv
+title: MediRoute
 emoji: 🏥
 colorFrom: blue
-colorTo: cyan
+colorTo: indigo
 sdk: docker
-pinned: true
+pinned: false
 license: mit
-short_description: AI Emergency Department triage environment for OpenEnv Hackathon
 tags:
   - openenv
   - healthcare
   - reinforcement-learning
-  - medical-ai
   - triage
-  - nlp
+  - medical-ai
 ---
 
 # 🏥 MediRoute — Emergency Department Triage OpenEnv

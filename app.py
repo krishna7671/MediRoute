@@ -8,7 +8,13 @@ from __future__ import annotations
 
 import json
 import os
+import sys
 import traceback
+
+# ── Ensure the project root is on sys.path so `env` package is always found ──
+ROOT = os.path.dirname(os.path.abspath(__file__))
+if ROOT not in sys.path:
+    sys.path.insert(0, ROOT)
 
 import gradio as gr
 
@@ -19,6 +25,7 @@ from env.models import (
     ExtractedEntities,
     ResourceAssignment,
 )
+
 
 # ─────────────────────────────────────────────
 # Helpers
@@ -209,11 +216,7 @@ CSS = """
 #score-box { background: #1a1a2e; border-radius: 8px; padding: 16px; }
 """
 
-with gr.Blocks(
-    title="MediRoute — Emergency Triage OpenEnv",
-    theme=gr.themes.Soft(primary_hue="blue", secondary_hue="cyan"),
-    css=CSS,
-) as demo:
+with gr.Blocks(title="MediRoute — Emergency Triage OpenEnv") as demo:
     gr.Markdown(
         """
         # 🏥 MediRoute: Emergency Department Triage OpenEnv
@@ -283,4 +286,9 @@ with gr.Blocks(
     )
 
 if __name__ == "__main__":
-    demo.launch(server_name="0.0.0.0", server_port=7860, share=False)
+    demo.launch(
+        server_name="0.0.0.0",
+        server_port=7860,
+        share=False,
+        theme=gr.themes.Soft(primary_hue="blue", secondary_hue="indigo"),
+    )

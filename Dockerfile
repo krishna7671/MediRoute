@@ -22,10 +22,14 @@ RUN pip install --no-cache-dir --upgrade pip && \
 # ── Application code ──────────────────────────────────────────────────────────
 COPY . .
 
+# ── Verify env/ package is present (fail fast at build time) ──────────────────
+RUN ls -la /app/env/ && ls -la /app/env/tasks/ && echo "✅ env package verified"
+
 # ── Environment variables (non-secret) ────────────────────────────────────────
 ENV MEDIROUTE_SEED=42
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONPATH=/app
 
 # ── Expose Gradio port (HF Spaces standard) ───────────────────────────────────
 EXPOSE 7860
