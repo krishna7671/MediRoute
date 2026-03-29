@@ -223,6 +223,8 @@ async def health():
     return {"status": "ok"}
 
 @fastapi_app.post("/reset")
+@fastapi_app.post("/api/reset")
+@fastapi_app.post("/run/reset")
 async def reset_endpoint(request: Request):
     try:
         try:
@@ -237,6 +239,8 @@ async def reset_endpoint(request: Request):
         return JSONResponse(status_code=500, content={"error": str(e)})
 
 @fastapi_app.post("/step")
+@fastapi_app.post("/api/step")
+@fastapi_app.post("/run/step")
 async def step_endpoint(request: Request):
     try:
         body = await request.json()
@@ -246,6 +250,8 @@ async def step_endpoint(request: Request):
         return JSONResponse(status_code=500, content={"error": str(e)})
 
 @fastapi_app.get("/state")
+@fastapi_app.get("/api/state")
+@fastapi_app.get("/run/state")
 async def state_endpoint():
     try:
         return JSONResponse(content=get_env().state())
