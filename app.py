@@ -214,18 +214,27 @@ with gr.Blocks(title="MediRoute — Emergency Triage OpenEnv") as demo:
 # ══════════════════════════════════════════════════════════════════════════════
 
 from fastapi import FastAPI, Request
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, RedirectResponse
 
 fastapi_app = FastAPI()
+
+@fastapi_app.get("/")
+async def root_redirect():
+    return RedirectResponse(url="/ui")
 
 @fastapi_app.get("/health")
 async def health():
     return {"status": "ok"}
 
 @fastapi_app.post("/reset")
+@fastapi_app.post("/reset/")
+@fastapi_app.post("/{p1}/reset")
+@fastapi_app.post("/{p1}/{p2}/reset")
 @fastapi_app.post("/api/reset")
+@fastapi_app.post("/api/reset/")
 @fastapi_app.post("/run/reset")
-async def reset_endpoint(request: Request):
+@fastapi_app.post("/run/reset/")
+async def reset_endpoint(request: Request, p1: str = None, p2: str = None):
     try:
         try:
             body = await request.json()
@@ -239,9 +248,14 @@ async def reset_endpoint(request: Request):
         return JSONResponse(status_code=500, content={"error": str(e)})
 
 @fastapi_app.post("/step")
+@fastapi_app.post("/step/")
+@fastapi_app.post("/{p1}/step")
+@fastapi_app.post("/{p1}/{p2}/step")
 @fastapi_app.post("/api/step")
+@fastapi_app.post("/api/step/")
 @fastapi_app.post("/run/step")
-async def step_endpoint(request: Request):
+@fastapi_app.post("/run/step/")
+async def step_endpoint(request: Request, p1: str = None, p2: str = None):
     try:
         body = await request.json()
         result = parse_and_step(body)
@@ -250,17 +264,21 @@ async def step_endpoint(request: Request):
         return JSONResponse(status_code=500, content={"error": str(e)})
 
 @fastapi_app.get("/state")
+@fastapi_app.get("/state/")
+@fastapi_app.get("/{p1}/state")
+@fastapi_app.get("/{p1}/{p2}/state")
 @fastapi_app.get("/api/state")
+@fastapi_app.get("/api/state/")
 @fastapi_app.get("/run/state")
-async def state_endpoint():
+@fastapi_app.get("/run/state/")
+async def state_endpoint(p1: str = None, p2: str = None):
     try:
         return JSONResponse(content=get_env().state())
     except Exception as e:
         return JSONResponse(status_code=500, content={"error": str(e)})
 
-# Mount Gradio onto FastAPI
-app = gr.mount_gradio_app(fastapi_app, demo, path="/")
-
+# Mount Gradio onto FastAPI cleanly under /ui to avoid route conflicts
+app = gr.mount_gradio_app(fastapi_app, demo, path="/ui")
 
 if __name__ == "__main__":
     import uvicorn
