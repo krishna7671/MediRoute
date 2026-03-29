@@ -48,4 +48,4 @@ include = ["env*"]
 mediroute = "env.environment:MediRouteEnv"
 
 [project.scripts]
-server = "app:main"
+server = "server.app:main"

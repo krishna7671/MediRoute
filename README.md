@@ -231,7 +231,7 @@ cd openenv-mediRoute
 pip install -r requirements.txt
 
 # Run the Gradio demo
-python app.py
+python -m uvicorn server.app:app --host 0.0.0.0 --port 7860
 
 # Run tests
 pytest tests/ -v
@@ -301,7 +301,8 @@ openenv-mediRoute/
 ├── openenv.yaml              # OpenEnv spec metadata
 ├── Dockerfile                # HF Spaces container
 ├── requirements.txt          # Python dependencies
-├── app.py                    # Gradio interactive demo
+├── server/
+│   └── app.py                # Gradio interactive demo
 ├── baseline.py               # Baseline inference (OpenAI API)
 ├── .env.example              # Environment variable template
 ├── env/

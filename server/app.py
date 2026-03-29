@@ -12,7 +12,7 @@ import sys
 import traceback
 from typing import Any, Dict, Optional
 
-ROOT = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if ROOT not in sys.path:
     sys.path.insert(0, ROOT)
 
@@ -282,7 +282,7 @@ app = gr.mount_gradio_app(fastapi_app, demo, path="/ui")
 
 def main():
     import uvicorn
-    uvicorn.run("app:app", host="0.0.0.0", port=7860, reload=False)
+    uvicorn.run("server.app:app", host="0.0.0.0", port=7860, reload=False)
 
 if __name__ == "__main__":
     main()
