@@ -280,6 +280,9 @@ async def state_endpoint(p1: str = None, p2: str = None):
 # Mount Gradio onto FastAPI cleanly under /ui to avoid route conflicts
 app = gr.mount_gradio_app(fastapi_app, demo, path="/ui")
 
-if __name__ == "__main__":
+def main():
     import uvicorn
     uvicorn.run("app:app", host="0.0.0.0", port=7860, reload=False)
+
+if __name__ == "__main__":
+    main()

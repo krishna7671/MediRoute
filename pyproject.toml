@@ -33,6 +33,7 @@ dependencies = [
     "rich>=13.0.0",
     "typer>=0.9.0",
     "httpx>=0.25.0",
+    "openenv-core>=0.2.0",
 ]
 
 [project.optional-dependencies]
@@ -45,3 +46,6 @@ include = ["env*"]
 
 [project.entry-points."openenv.environments"]
 mediroute = "env.environment:MediRouteEnv"
+
+[project.scripts]
+server = "app:main"
